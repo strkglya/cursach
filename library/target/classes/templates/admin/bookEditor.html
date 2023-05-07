@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title th:text="Редактирование">Редактирование</title>
+    <link rel = "icon" href ="https://www.pinclipart.com/picdir/big/163-1634137_brochure-markant-online-books-icons-clipart.png"
+          type = "image/x-icon">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal" th:text="#{a.header.welcome}">Welcome, My Lord</h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark describable" th:href="${T(curs.library.service.helper.directions.Pathes).ADMIN_MAIN.getUrl()}" th:text="#{a.header.main}">Requests</a>
+        <a class="p-2 text-dark describable" th:href="${T(curs.library.service.helper.directions.Pathes).ADMIN_USERS.getUrl()}" th:text="#{a.header.users}">Users</a>
+        <a class="p-2 text-dark describable" th:href="${T(curs.library.service.helper.directions.Pathes).ADMIN_BILLS.getUrl()}" th:text="#{a.header.bills}">Bills</a>
+        <a class="p-2 text-dark describable" th:href="${T(curs.library.service.helper.directions.Pathes).ADMIN_ROOMS.getUrl()}" th:text="#{a.header.rooms}">Rooms</a>
+    </nav>
+    <a class="btn btn-outline-primary" th:href="${T(curs.library.service.helper.directions.Pathes).LOGOUT.getUrl()}" th:text="#{u.header.logout}">Logout</a>
+</div>
+
+
+<div th:each="book : ${book}">
+
+    <form method="post" class="m-4">
+        <div class="fadeInDown" th:align="center">
+
+            <div class="form-group col-2">
+                <label for="name" th:text="Название">Название</label>
+                <input type="text" required th:value="${book.getName()}" class="form-control" id="name" name="name">
+            </div>
+            <div class="form-group col-2">
+                <label for="author" th:text="Автор">Автор</label>
+                <input type="text" required th:value="${book.getAuthor()}" class="form-control" id="author" name="author">
+            </div>
+            <div class="form-group col-2">
+                <label for="genre" th:text="Жанр">Жанр</label>
+                <input type="text" required th:value="${book.getGenre()}" class="form-control" id="genre" name="genre">
+            </div>
+
+            <div class="form-group col-2">
+                <label for="price" th:text="Цена">Закупочная цена</label>
+                <input type="number" required th:value="${book.getPrice()}" class="form-control" id="price" name="price" min="1" step="1">
+            </div>
+
+            <div class="form-group col-2">
+                <label for="picture" th:text="Изображение">Изображение</label>
+                <input type="text" th:value="${book.getPicURL()}" class="form-control" id="picture" name="picture">
+            </div>
+
+        </div>
+        <button type="submit" class="button" th:text="Обновить" >Обновить</button>
+
+    </form>
+
+</div>
+
+
+
+</body>
+<script>
+    function up(e) {
+        if (e.value.indexOf(".") != '-1') {
+            e.value=e.value.substring(0, e.value.indexOf(".") + 2);
+        }
+    }
+</script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</html>

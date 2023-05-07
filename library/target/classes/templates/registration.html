@@ -1,0 +1,56 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<title th:text="#{register.title}"></title>
+</head>
+<body class="blue">
+<div class="alert alert-danger text-dark" th:if = "${error}" th:text="#{login.or.pass.wrong}">
+</div>
+
+<br>
+<div class="container mt-1">
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<div class="card">
+				<header class="card-header">
+					<h4 class="card-title mt-2" th:text="#{register.signup}"></h4>
+				</header>
+				<article class="card-body">
+					<form action="#" th:action="@{/register}" method="post">
+						<div class="form-row">
+							<div class="col form-group">
+								<label th:text="#{register.login}"> <span class="text-danger">*</span> </label>
+								<input type="text" name="name" class="form-control" placeholder="" pattern="^(?=.*[A-Z])[A-Za-z\d]{6,}$">
+							</div> <!-- form-group end.// -->
+						</div>
+						<div class="form-group">
+							<label th:text="#{register.email}"></label>
+							<input type="email"  name="email" class="form-control" placeholder="">
+							<small class="form-text text-muted" th:text="#{register.email.desclaimer}"></small>
+						</div>
+						<div class="form-group">
+							<label th:text="#{register.pass}"><span class="text-danger">*</span></label>
+							<input class="form-control" name="password" type="password" pattern="^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$">
+						</div>
+						<div class="form-group">
+							<button type="submit" class="button" th:text="Зарегистрироваться"></button>
+						</div>
+					</form>
+				</article>
+				<div class="border-top card-body text-center">
+					<p th:text="#{register.have.acc}"></p>
+					<a href="/login" th:text="Войти"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

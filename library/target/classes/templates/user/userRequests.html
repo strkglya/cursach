@@ -1,0 +1,98 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title th:text="#{user.req.title}"> Title </title>
+    <link rel = "icon" href ="https://i.pinimg.com/564x/cb/02/f6/cb02f68f8d612f19568426ef806df130.jpg"
+          type = "image/x-icon">
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal" th:text="#{u.header.welcome.msg}"></h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark describable" href="/user/" th:text="#{u.header.new.req}"></a>
+        <a class="p-2 text-dark describable" href="/user/my-requests" th:text="#{u.header.all.req}"></a>
+        <a class="p-2 text-dark describable" href="/user/my-bills" th:text="#{u.header.all.bill}"></a>
+    </nav>
+    <a class="btn btn-outline-primary" th:href="${T(curs.library.service.helper.directions.Pathes).LOGOUT.getUrl()}" th:text="#{u.header.logout}"></a>
+</div>
+<br>
+
+<div class="m-4"><h2 th:text="#{user.req.table.title}">Requests</h2></div>
+
+<table class="table text-center">
+    <thead>
+    <tr>
+        <th scope="col" hidden th:text="Id"></th>
+        <th scope="col" th:text="Название"></th>
+        <th scope="col" th:text="#{user.req.table.app}"></th>
+        <th scope="col" th:text="#{user.req.table.cncl}"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="r : *{page.getContent()}">
+        <td hidden th:text="${r.getBookID()}"></td>
+        <td th:text="${r.getBookName()}"></td>
+        <!--    STATUS    -->
+            <td th:if="${r.getStatus() == T(curs.library.model.enums.Status).approved}" %>
+                <p th:text="#{enum.approved}"></p>
+            </td>
+            <td th:if="${r.getStatus() == T(curs.library.model.enums.Status).waitingForApproval}" %>
+                <p th:text="#{enum.waiting.for.approve}"></p>
+            </td>
+            <td th:if="${r.getStatus() == T(curs.library.model.enums.Status).cancelled}" %>
+                <p th:text="#{user.req.table.cancelled}"></p>
+            </td>
+        <td>
+            <a th:href="@{'/user/my-requests?method=cancel&req_id=' + ${r.getId()}}" th:text="#{user.req.table.cncl}"></a>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+<nav class="ml18" aria-label="my-nav" th:if="${page.totalPages > 0}">
+    <ul class="pagination">
+        <li th:each="i: ${#numbers.sequence(0, page.getTotalPages() - 1)}" th:classappend="${page.getNumber() == i} ? active " class="page-item">
+            <a class="button" th:href="'/user/my-requests?page=' + ${i}" th:text="${i + 1}"> Page number</a>
+        </li>
+    </ul>
+</nav>
+</br>
+<div class="container">
+    <footer class="py-3 my-4">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+            <li class="nav-item"><a th:href="${T(curs.library.service.helper.directions.Pathes).USER_MAIN.getUrl()}" th:text="#{u.header.new.req}" class="nav-link px-2 text-body-secondary">Requests</a></li>
+            <li class="nav-item"><a th:href="${T(curs.library.service.helper.directions.Pathes).USER_REQUESTS.getUrl()}" th:text="#{u.header.all.req}" class="nav-link px-2 text-body-secondary">Features</a></li>
+            <li class="nav-item"><a th:href="${T(curs.library.service.helper.directions.Pathes).USER_BILLS.getUrl()}" th:text="#{u.header.all.bill}" class="nav-link px-2 text-body-secondary">Pricing</a></li>
+        </ul>
+        <p class="text-center text-body-secondary">© STRKGLYA Company, Inc</p>
+    </footer>
+</div>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
+</script>
+<script>document.addEventListener('DOMContentLoaded', () => {
+
+    const getSort = ({ target }) => {
+        const order = (target.dataset.order = -(target.dataset.order || -1));
+        const index = [...target.parentNode.cells].indexOf(target);
+        const collator = new Intl.Collator(['en', 'ru'], { numeric: true });
+        const comparator = (index, order) => (a, b) => order * collator.compare(
+            a.children[index].innerHTML,
+            b.children[index].innerHTML
+        );
+
+        for(const tBody of target.closest('table').tBodies)
+            tBody.append(...[...tBody.rows].sort(comparator(index, order)));
+
+        for(const cell of target.parentNode.cells)
+            cell.classList.toggle('sorted', cell === target);
+    };
+
+    document.querySelectorAll('.table thead').forEach(tableTH => tableTH.addEventListener('click', () => getSort(event)));
+
+});</script>
+</body>
+</html>

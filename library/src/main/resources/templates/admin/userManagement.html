@@ -1,0 +1,127 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title th:text="#{a.header.users}">Users</title>
+    <link rel="icon"
+          href="https://www.pinclipart.com/picdir/big/163-1634137_brochure-markant-online-books-icons-clipart.png"
+          type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal" th:text="#{a.header.welcome}">Welcome, My Lord</h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark describable" th:href="${T(curs.library.service.helper.directions.Pathes).ADMIN_MAIN.getUrl()}" th:text="#{a.header.main}">Requests</a>
+        <a class="p-2 text-dark describable" th:href="${T(curs.library.service.helper.directions.Pathes).ADMIN_USERS.getUrl()}" th:text="#{a.header.users}">Users</a>
+        <a class="p-2 text-dark describable" th:href="${T(curs.library.service.helper.directions.Pathes).ADMIN_BILLS.getUrl()}" th:text="#{a.header.bills}">Bills</a>
+        <a class="p-2 text-dark describable" th:href="${T(curs.library.service.helper.directions.Pathes).ADMIN_ROOMS.getUrl()}" th:text="#{a.header.rooms}">Rooms</a>    </nav>
+    <a class="btn btn-outline-primary" th:href="${T(curs.library.service.helper.directions.Pathes).LOGOUT.getUrl()}" th:text="#{u.header.logout}">Logout</a>
+</div>
+
+
+<br>
+<div class="m-4"><h2 th:text="#{a.header.users}">Users</h2></div>
+
+<table id="example" class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col" th:text="#{u.name}">Name</th>
+        <th scope="col" th:text="#{u.role}">Role</th>
+        <th scope="col" th:text="#{u.email}">Email</th>
+        <th scope="col" th:text="#{u.del}">Delete</th>
+        <th scope="col" th:text="#{u.change}">Change privileges</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="u : *{page.getContent()}">
+        <th scope="row" th:text="${u.getId()}"></th>
+        <td th:text="${u.getName()}"></td>
+        <td th:text="${u.getRole()}"></td>
+        <td th:text="${u.getEmail()}"></td>
+
+        <td><a th:href="'/admin/users?method=remove&id=' + ${u.getId()}" th:text="#{u.del}">Remove</a></td>
+        <td>
+            <a th:if="${u.getRole() == T(curs.library.model.enums.Role).USER}" th:href="'/admin/users?method=privilege_a&id=' + ${u.getId()}" th:text="#{u.to.a}">To Admin</a>
+            <a th:if="${u.getRole() == T( curs.library.model.enums.Role).ADMIN}" th:href="'/admin/users?method=privilege_u&id='+ ${u.getId()}" th:text="#{u.to.u}">To User</a>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+<nav class="ml18" aria-label="my-nav" th:if="${page.totalPages > 0}">
+    <ul class="pagination">
+        <li th:each="i: ${#numbers.sequence(0, page.getTotalPages() - 1)}" th:classappend="${page.getNumber() == i} ? active " class="page-item">
+            <a class="button" th:href="'/admin/users?page=' + ${i}" th:text="${i + 1}"> Page number</a>
+        </li>
+    </ul>
+</nav>
+</nav>
+<br>
+<div class="m-4"><h3 th:text="#{u.add}">Add user</h3></div>
+<form action="#" th:action="@{/admin/users-update}" method="post" class="m-4" >
+    <div class="fadeInDown" th:align="center">
+        <div class="form-group col-2">
+            <label for="name" th:text="#{u.u.name}">User name</label>
+            <input type="text" class="form-control" id="name" name="name">
+        </div>
+        <div class="form-group col-2">
+            <label for="pass" th:text="#{u.pass}">Password</label>
+            <input type="text" class="form-control" id="pass" name="pass">
+        </div>
+
+        <div class="form-group col-2">
+            <label for="role" th:text="#{u.role}">Role</label>
+            <select class="browser-default custom-select" id="role" name="role">
+                <option th:each="val : ${T(curs.library.model.enums.Role).values()}"
+                        th:value="${val}"
+                        th:text="${val}">
+            </select>
+        </div>
+        <div class="form-group col-2">
+            <label for="mail" th:text="#{u.email}">Email</label>
+            <input type="email" class="form-control" id="mail" name="mail">
+        </div>
+
+    </div>
+    <button type="submit" class="button" th:text="#{user.main.req.btn}">Add</button>
+</form>
+
+<div class="container">
+    <footer class="py-3 my-4">
+
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+            <li class="nav-item"><a th:href="${T(curs.library.service.helper.directions.Pathes).ADMIN_MAIN.getUrl()}" th:text="#{a.header.main}" class="nav-link px-2 text-body-secondary">Requests</a></li>
+            <li class="nav-item"><a th:href="${T(curs.library.service.helper.directions.Pathes).ADMIN_USERS.getUrl()}" th:text="#{a.header.users}" class="nav-link px-2 text-body-secondary">Features</a></li>
+            <li class="nav-item"><a th:href="${T(curs.library.service.helper.directions.Pathes).ADMIN_BILLS.getUrl()}" th:text="#{a.header.bills}" class="nav-link px-2 text-body-secondary">Pricing</a></li>
+            <li class="nav-item"><a th:href="${T(curs.library.service.helper.directions.Pathes).ADMIN_ROOMS.getUrl()}" th:text="#{a.header.rooms}" class="nav-link px-2 text-body-secondary">FAQs</a></li>
+        </ul>
+        <p class="text-center text-body-secondary">© STRKGLYA Company, Inc</p>
+    </footer>
+</div>
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => {
+
+    const getSort = ({ target }) => {
+        const order = (target.dataset.order = -(target.dataset.order || -1));
+        const index = [...target.parentNode.cells].indexOf(target);
+        const collator = new Intl.Collator(['en', 'ru'], { numeric: true });
+        const comparator = (index, order) => (a, b) => order * collator.compare(
+            a.children[index].innerHTML,
+            b.children[index].innerHTML
+        );
+
+        for(const tBody of target.closest('table').tBodies)
+            tBody.append(...[...tBody.rows].sort(comparator(index, order)));
+
+        for(const cell of target.parentNode.cells)
+            cell.classList.toggle('sorted', cell === target);
+    };
+
+    document.querySelectorAll('.table thead').forEach(tableTH => tableTH.addEventListener('click', () => getSort(event)));
+
+});</script>
+</body>
+</html>

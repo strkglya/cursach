@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+
+    <title th:text="#{welcome.title}">Title</title>
+</head>
+<body>
+
+<div class="banner">
+    <div class="content">
+        <h1>ДОБРО ПОЖАЛОВАТЬ В БИБЛИОТЕКУ</h1>
+        <p>Здесь вы найдете огромное количество книг на любой вкус и интерес. <br>Мы предлагаем как классические произведения, так и современные бестселлеры. Вы можете выбрать книгу для учебы или для досуга, для детей или для взрослых.<br> Приятного чтения!</p>
+        <div>
+
+            <button type="button" onclick="window.location.href='/login'"><span></span>ВОЙТИ</button>
+            <button type="button" onclick="window.location.href='/register'"><span></span>ЗАРЕГИСТРИРОВАТЬСЯ</button>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="/js/script.js"></script>
+</html>

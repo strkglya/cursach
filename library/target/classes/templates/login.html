@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+<!--    TODO: fix the stylesheet(looks strange on main; customize)
+        TODO: add OAuth     -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title th:text="#{login.title}"> Title </title>
+    <link rel = "icon" href ="https://i.pinimg.com/564x/cb/02/f6/cb02f68f8d612f19568426ef806df130.jpg"
+          type = "image/x-icon">
+</head>
+<body class="blue">
+
+
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+
+        <div th:if="${param.error}" class="alert alert-error">
+            Invalid username and password.
+        </div>
+        <div th:if="${param.logout}" class="alert alert-success">
+            You have been logged out.
+        </div>
+        <form action="#" th:action="@{/login}" method="post">
+            <input type="text" id="login" class="special fadeIn second" name="username" th:placeholder="#{login.placeholder}">
+            <input type="text" id="password" class="special fadeIn third" name="password" th:placeholder="#{password.placeholder}">
+            <input type="submit" class="fadeIn fourth" th:value="#{login.link.value}">
+        </form>
+
+        <!-- Remind Passowrd -->
+        <div id="formFooter">
+            <a class="underlineHover" href="/register" th:text="#{register.link.text}"> Register </a>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
